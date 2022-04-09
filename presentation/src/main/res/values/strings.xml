@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">YTMusic</string>
+    <string name="title_home">Home</string>
+    <string name="title_trending">Trending</string>
+    <string name="title_histories">Histories</string>
+    <string name="title_playlists">Playlists</string>
+    <string name="title_downloaded">Downloaded</string>
+    <string name="txt_search">Search</string>
+    <string name="txt_search_youtube">Search YouTube</string>
+</resources>
