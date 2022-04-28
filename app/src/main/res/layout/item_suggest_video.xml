@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/white"
+    tools:layout_height="@dimen/height_suggest_video_view"
+    tools:layout_width="match_parent"
+    tools:parentTag="android.widget.RelativeLayout">
+
+    <ImageView
+        android:id="@+id/iv_video_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/iv_channel_img" />
+
+    <TextView
+        android:id="@+id/tv_video_length"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/iv_video_img"
+        android:layout_alignBottom="@id/iv_video_img"
+        android:layout_margin="@dimen/space_small"
+        android:background="@drawable/bg_rec_radius_tiny_black"
+        android:paddingHorizontal="@dimen/space_small"
+        android:paddingVertical="@dimen/space_tiny"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_tiny"
+        android:textStyle="bold"
+        tools:text="1:01:06" />
+
+    <ImageView
+        android:id="@+id/iv_channel_img"
+        android:layout_width="@dimen/diameter_channel_image"
+        android:layout_height="@dimen/diameter_channel_image"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginVertical="@dimen/space_medium"
+        android:layout_marginStart="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_larger" />
+
+    <TextView
+        android:id="@+id/tv_video_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_video_img"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/space_medium"
+        android:layout_marginEnd="@dimen/space_large"
+        android:layout_marginBottom="@dimen/space_small"
+        android:layout_toEndOf="@id/iv_channel_img"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_normal"
+        android:textStyle="bold"
+        tools:text="( DTAP ) See Tình | VAnh. Biểu Cảm Dễ Thương | Bestcut Bữa Trưa Vui Vẻ | Sóng Nhạc Online" />
+
+    <TextView
+        android:id="@+id/tv_video_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_video_title"
+        android:layout_marginEnd="@dimen/space_large"
+        android:layout_toEndOf="@id/iv_channel_img"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/text_small"
+        tools:text="Sóng Nhạc Online &#8226; 1.9M views &#8226; 6 days ago" />
+</merge>

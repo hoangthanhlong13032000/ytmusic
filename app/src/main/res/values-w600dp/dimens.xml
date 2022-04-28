@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_suggest_video_view">188dp</dimen>
+    <dimen name="height_video_image">162dp</dimen>
+    <dimen name="width_video_image">288dp</dimen>
+    <dimen name="diameter_channel_image">45dp</dimen>
+</resources>
