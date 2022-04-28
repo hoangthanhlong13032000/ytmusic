@@ -7,33 +7,32 @@
 
     <fragment
         android:id="@+id/navigation_trending"
-        android:name="htlong.learn.youtube.ui.trending.TrendingFragment"
+        android:name="htlong.learn.youtube.ui.fragment.trending.TrendingFragment"
         android:label="@string/title_trending"
         tools:layout="@layout/fragment_trending" />
 
     <fragment
         android:id="@+id/navigation_histories"
-        android:name="htlong.learn.youtube.ui.histories.HistoriesFragment"
+        android:name="htlong.learn.youtube.ui.fragment.histories.HistoriesFragment"
         android:label="@string/title_histories"
         tools:layout="@layout/fragment_histories" />
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="htlong.learn.youtube.ui.home.HomeFragment"
+        android:name="htlong.learn.youtube.ui.fragment.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_playlists"
-        android:name="htlong.learn.youtube.ui.playlists.PlayListsFragment"
+        android:name="htlong.learn.youtube.ui.fragment.playlists.PlayListsFragment"
         android:label="@string/title_playlists"
         tools:layout="@layout/fragment_playlists" />
 
     <fragment
         android:id="@+id/navigation_downloaded"
-        android:name="htlong.learn.youtube.ui.downloaded.DownloadedFragment"
+        android:name="htlong.learn.youtube.ui.fragment.downloaded.DownloadedFragment"
         android:label="@string/title_downloaded"
         tools:layout="@layout/fragment_downloaded" />
-
 
 </navigation>

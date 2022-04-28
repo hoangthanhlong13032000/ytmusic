@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<VB : ViewBinding, VM: ViewModel>(
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
     private val bindingInflater: (inflater: LayoutInflater) -> VB,
     private val classViewModel: Class<VM>
 ) : Fragment() {
@@ -22,7 +22,6 @@ abstract class BaseFragment<VB : ViewBinding, VM: ViewModel>(
     abstract fun initUI()
     abstract fun initViewModel()
 
-    open fun initListener() {}
     open fun onBackPressed(): Boolean = false
 
     override fun onCreateView(
@@ -36,7 +35,6 @@ abstract class BaseFragment<VB : ViewBinding, VM: ViewModel>(
         if (isNotYetInit) {
             initViewModel()
             initUI()
-            initListener()
             isNotYetInit = false
         }
         updateUI()

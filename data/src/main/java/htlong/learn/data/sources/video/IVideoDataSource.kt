@@ -1,7 +1,7 @@
-package htlong.learn.youtube.data.source.video
+package htlong.learn.data.sources.video
 
-import htlong.learn.domain.entities.ResponseEntities
-import htlong.learn.youtube.utils.Enums
+import htlong.learn.domain.entities.VideoEntities
+import htlong.learn.domain.entities.VideoQuery
 
 /**
  * - interface's purpose: Youtube video source
@@ -15,8 +15,9 @@ interface IVideoDataSource {
     }
 
     interface Remote {
-        suspend fun search(q: String): ResponseEntities.Search
-        suspend fun getByID(id: String): ResponseEntities.Video
-        suspend fun getByType(type: Enums.VideoType): ResponseEntities.Search
+        suspend fun getByID(id: String): VideoEntities.Info
+        suspend fun search(q: String): VideoQuery
+        suspend fun save(video: VideoEntities.Info)
+//        suspend fun getByType(type: Enums.VideoType): ResponseEntities.Search
     }
 }

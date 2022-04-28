@@ -4,9 +4,11 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
-            type="htlong.learn.youtube.ui.search.SearchViewModel" />
+            type="htlong.learn.youtube.ui.activities.search.SearchViewModel" />
     </data>
 
     <RelativeLayout
@@ -43,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:imeOptions="actionSearch"
                 android:hint="@string/txt_search_youtube"
+                android:imeOptions="actionSearch"
                 android:inputType="textNoSuggestions"
                 android:paddingHorizontal="@dimen/space_large"
                 android:paddingVertical="@dimen/space_medium"
@@ -84,13 +86,60 @@
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_suggest"
+            android:id="@+id/sg_query_rec_suggest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/btn_search"
             android:overScrollMode="never"
             android:paddingTop="@dimen/space_medium"
+            android:visibility="@{(vm.isQueryMode &amp; !vm.isLoading) ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:suggestQueryResponse="@{vm.suggestQueryResponse}" />
+            app:suggestQuery="@{vm.suggestQuery}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/sg_video_rec_suggest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_search"
+            android:overScrollMode="never"
+            android:paddingTop="@dimen/space_medium"
+            android:visibility="@{(vm.isQueryMode || vm.isLoading) ? View.GONE : View.VISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:videoQuery="@{vm.videoQuery}" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_not_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btn_retry"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/space_larger"
+            android:gravity="center"
+            android:text="@string/txt_no_videos_found"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_large"
+            android:visibility="@{vm.isError ? View.VISIBLE : View.GONE}" />
+
+        <Button
+            android:id="@+id/btn_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/space_larger"
+            android:text="@string/txt_retry"
+            android:visibility="@{vm.isError ? View.VISIBLE : View.GONE}" />
     </RelativeLayout>
 </layout>

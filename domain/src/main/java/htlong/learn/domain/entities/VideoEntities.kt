@@ -1,6 +1,7 @@
-package htlong.learn.domain.models
+package htlong.learn.domain.entities
 
 interface VideoEntities {
+    // all information about a youtube video
     data class Info(
         val videos: List<Media>,
         val videoOnly: List<Media>,
@@ -8,19 +9,7 @@ interface VideoEntities {
         val recommends: List<Details>,
         val details: Details
     )
-
-    data class Media(
-        val url: String = "",
-        val mimeType: String = "",
-        val container: String = "",
-        val quality: String = "",
-        val audioQuality: String = "",
-        val width: Int = 0,
-        val height: Int = 0,
-        val hasAudio: Boolean = false,
-        val hasVideo: Boolean = false
-    )
-
+    // details information
     data class Details(
         val id: String = "",
         val source: String = "",
@@ -35,19 +24,35 @@ interface VideoEntities {
         val stats: Stats = Stats()
     )
 
+    // url information
+    data class Media(
+        val url: String = "",
+        val mimeType: String = "",
+        val container: String = "",
+        val quality: String = "",
+        val audioQuality: String = "",
+        val width: Int = 0,
+        val height: Int = 0,
+        val hasAudio: Boolean = false,
+        val hasVideo: Boolean = false
+    )
+
+    // image information
     data class Thumbnail(
         val url: String = "",
-        val width: Int = 0,
-        val height: Int = 0
+        val width: String = "",
+        val height: String = ""
     )
 
+    // statistic information
     data class Stats(
-        val viewCount: Int = 0,
-        val likeCount: Int = 0,
-        val shareCount: Int = 0,
-        val commentCount: Int = 0
+        val viewCount: String = "",
+        val likeCount: String = "",
+        val shareCount: String = "",
+        val commentCount: String = ""
     )
 
+    // author channel information
     data class Channel(
         val id: String = "",
         val title: String = "",
@@ -55,6 +60,7 @@ interface VideoEntities {
         val avatar: Avatar = Avatar()
     )
 
+    // author image
     data class Avatar(
         val large: String = "",
         val medium: String = "",

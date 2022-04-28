@@ -1,4 +1,4 @@
-package htlong.learn.youtube.data.source.datastore
+package htlong.learn.data.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
-import htlong.learn.youtube.utils.Utils
+import htlong.learn.data.common.Utils
 import kotlinx.coroutines.flow.firstOrNull
 
 /**
@@ -61,7 +61,6 @@ class DataStoreHelper private constructor(context: Context) {
 
         const val MAX_SEARCH_HISTORIES_COUNT = 10
         val KEY_SEARCH_HISTORIES = stringPreferencesKey("search_histories")
-
 
         private var instance: DataStoreHelper? = null
         fun getInstance(context: Context) =

@@ -1,28 +1,19 @@
-package htlong.learn.data.sources.suggestquery.remote
+package htlong.learn.data.sources.suggestquery
 
 import com.google.gson.Gson
-import htlong.learn.domain.entities.ResponseEntities
-import htlong.learn.data.sources.suggestquery.ISuggestQueryDataSource
-import htlong.learn.data.api.SuggestQueryClient
-import htlong.learn.youtube.utils.Utils
+import htlong.learn.data.helpers.NetworkHelper
+import htlong.learn.data.api.SuggestQueryApi
+import htlong.learn.data.common.Utils
+import htlong.learn.domain.entities.SuggestQuery
 
 class SuggestQueryRemoteDatasource private constructor() : ISuggestQueryDataSource.Remote {
+    private val sgApi = NetworkHelper.createApi(SuggestQueryApi.URL, SuggestQueryApi::class.java)
 
-    private var server = 0
-
-    override suspend fun suggest(q: String): ResponseEntities.SuggestQuery {
-        val result = ResponseEntities.SuggestQuery(query = q, isHistory = false, suggests = listOf())
+    override suspend fun suggest(q: String): SuggestQuery {
+        val result = SuggestQuery(query = q, isHistory = false, suggests = listOf())
         if (q.isNotBlank()) {
             try {
-                val res = when (server) {
-                    1 -> SuggestQueryClient.clients1.search(q)
-                    2 -> SuggestQueryClient.clients2.search(q)
-                    3 -> SuggestQueryClient.clients3.search(q)
-                    else -> SuggestQueryClient.default.search(q)
-                }
-                server = (server + 1) % 4
-
-                res.body()?.let {
+                sgApi.search(q).body()?.let {
                     val body = Gson().fromJson(it, List::class.java)
                     result.suggests = body[1] as List<String>
                 }

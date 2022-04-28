@@ -1,4 +1,4 @@
-package htlong.learn.youtube.ui.search
+package htlong.learn.youtube.ui.activities.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +27,7 @@ class SearchViewModel(
 
     var isQueryMode = MutableLiveData(true)
     var isLoading = MutableLiveData(false)
+    var isError = MutableLiveData(false)
 
     /**
      * - Desc: current query search after process
@@ -55,6 +56,8 @@ class SearchViewModel(
      */
     fun suggest() {
         launch {
+            isQueryMode.value = true
+            isError.value = false
             val q = query.value ?: ""
 
             var sgQuery = getSuggestQueryUseCase(query = q)
@@ -63,7 +66,6 @@ class SearchViewModel(
                 sgQuery.suggests = sgQuery.suggests.map { "... $it" }
             }
             _suggestQuery.value = sgQuery
-            isQueryMode.value = true
         }
     }
 
@@ -76,9 +78,11 @@ class SearchViewModel(
     fun search() {
         query.value?.let { q ->
             isLoading.value = true
+            isError.value = false
             launch {
                 searchVideoByQueryUseCase(query = q).let {
                     _videoQuery.value = it
+                    if(it.suggests.isEmpty()) isError.value = true
                 }
                 isLoading.value = false
                 isQueryMode.value = false

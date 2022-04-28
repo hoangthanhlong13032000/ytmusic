@@ -1,4 +1,4 @@
-package htlong.learn.youtube.ui.search
+package htlong.learn.youtube.ui.activities.search
 
 import android.content.Context
 import android.content.Intent
@@ -36,14 +36,12 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initUI() {
         initViewModelUI()
         initRecSuggestUI()
         initSearchUI()
         initOtherUI()
     }
-
 
     private fun initViewModelUI() {
         binding.lifecycleOwner = this
@@ -81,7 +79,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(
             btnClear.setOnClickListener {
                 edtSearch.setText("")
                 edtSearch.requestFocus()
-                val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(edtSearch, InputMethodManager.SHOW_IMPLICIT)
             }
             btnSearch.setOnClickListener { search() }
@@ -91,7 +90,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(
                     false
                 }
                 onFocusChangeListener = View.OnFocusChangeListener { _, isFocus ->
-                    if(!isFocus) hideSoftKeyboard(this)
+                    if (!isFocus) hideSoftKeyboard(this)
                     else viewModel.suggest()
                 }
             }
@@ -100,7 +99,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(
 
     private fun initOtherUI() {
         binding.run {
-            btnBack.setOnClickListener { finishAndRemoveTask() }
+            btnBack.setOnClickListener { finish() }
+            btnRetry.setOnClickListener { viewModel.search() }
         }
     }
 

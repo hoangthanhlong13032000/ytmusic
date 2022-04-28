@@ -1,4 +1,4 @@
-package htlong.learn.youtube.ui.histories
+package htlong.learn.youtube.ui.fragment.histories
 
 import android.widget.TextView
 import htlong.learn.youtube.databinding.FragmentHistoriesBinding

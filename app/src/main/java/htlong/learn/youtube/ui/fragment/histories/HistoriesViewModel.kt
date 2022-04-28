@@ -1,4 +1,4 @@
-package htlong.learn.youtube.ui.histories
+package htlong.learn.youtube.ui.fragment.histories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

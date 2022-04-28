@@ -7,4 +7,8 @@ import retrofit2.http.Query
 interface SuggestQueryApi {
     @GET("/complete/search?client=firefox&hl=en&gl=vn&gs_ri=firefox&ds=yt")
     suspend fun search(@Query("q") query: String): Response<String>
+
+    companion object {
+        const val URL = "https://suggestqueries.google.com"
+    }
 }

@@ -1,30 +1,42 @@
-package htlong.learn.data.sources.video.remote
+package htlong.learn.data.sources.video
 
 import com.google.gson.Gson
-import htlong.learn.domain.entities.ResponseEntities
-import htlong.learn.data.sources.video.IVideoDataSource
-import htlong.learn.data.api.VideoClient
-import htlong.learn.youtube.utils.Enums
-import htlong.learn.youtube.utils.Utils
+import htlong.learn.data.helpers.NetworkHelper
+import htlong.learn.data.api.VideoApi
+import htlong.learn.data.common.Utils
+import htlong.learn.data.entities.ApiResponse
+import htlong.learn.domain.entities.VideoEntities
+import htlong.learn.domain.entities.VideoQuery
 
-class VideoRemoteDataSource private constructor(): IVideoDataSource.Remote {
-    override suspend fun search(q: String): ResponseEntities.Search {
-        return try {
-            val res = VideoClient.youtube.search(query = q)
-            Gson().fromJson(res.body() ?: res.errorBody()?.string(), ResponseEntities.Search::class.java)
+class VideoRemoteDataSource private constructor() : IVideoDataSource.Remote {
+    private val videoApi = NetworkHelper.createApi(VideoApi.URL, VideoApi::class.java)
+
+    override suspend fun getByID(id: String): VideoEntities.Info {
+        TODO("Not yet implemented")
+    }
+
+
+    override suspend fun search(q: String): VideoQuery {
+        val result = VideoQuery(query = q)
+        val gson = Gson()
+
+        try {
+            videoApi.searchByQuery(query = q).body()?.let {
+                val body = gson.fromJson(it, ApiResponse.VideoSearched::class.java)
+                result.suggests = body.data
+            }
         } catch (e: Exception) {
-            Utils.handleException("suggest_query", e)
-            ResponseEntities.Search(status = 0, data = emptyList(), e.localizedMessage ?: "")
+            Utils.handleException("video_search", e)
         }
+
+        return result
     }
 
-    override suspend fun getByType(type: Enums.VideoType): ResponseEntities.Search {
+
+    override suspend fun save(video: VideoEntities.Info) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getByID(id: String): ResponseEntities.Video {
-        TODO("Not yet implemented")
-    }
 
     companion object {
         private var instance: VideoRemoteDataSource? = null

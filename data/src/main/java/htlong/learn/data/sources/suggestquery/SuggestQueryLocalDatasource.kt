@@ -1,13 +1,12 @@
-package htlong.learn.data.sources.suggestquery.local
+package htlong.learn.data.sources.suggestquery
 
-import htlong.learn.domain.entities.ResponseEntities
 import htlong.learn.data.datastore.DataStoreHelper
-import htlong.learn.data.sources.suggestquery.ISuggestQueryDataSource
+import htlong.learn.domain.entities.SuggestQuery
 
 class SuggestQueryLocalDatasource private constructor(private val dataStoreHelper: DataStoreHelper) :
     ISuggestQueryDataSource.Local {
-    override suspend fun getAll(): ResponseEntities.SuggestQuery {
-        return ResponseEntities.SuggestQuery(query = "", isHistory = true, suggests = dataStoreHelper.getSearchHistories())
+    override suspend fun getAll(): SuggestQuery {
+        return SuggestQuery(query = "", isHistory = true, suggests = dataStoreHelper.getSearchHistories())
     }
 
     override suspend fun save(q: String) {

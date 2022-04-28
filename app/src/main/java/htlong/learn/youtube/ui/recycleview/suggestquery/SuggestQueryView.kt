@@ -1,4 +1,4 @@
-package htlong.learn.youtube.ui.search.recycleview.suggestquery
+package htlong.learn.youtube.ui.recycleview.suggestquery
 
 import android.content.Context
 import android.util.AttributeSet

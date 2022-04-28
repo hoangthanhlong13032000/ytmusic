@@ -1,4 +1,4 @@
-package htlong.learn.youtube.ui.activities
+package htlong.learn.youtube.ui.activities.main
 
 import android.content.Context
 import android.content.Intent
@@ -7,23 +7,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import htlong.learn.youtube.R
 import htlong.learn.youtube.databinding.ActivityMainBinding
+import htlong.learn.youtube.ui.activities.search.SearchActivity
 import htlong.learn.youtube.ui.base.BaseActivity
-import htlong.learn.youtube.ui.search.SearchActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     private var isDisable = false
 
-//    private val startActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-//        if (it.resultCode == Activity.RESULT_OK) {
-//            val value = it.data?.getStringExtra(KEY_QUERY) ?: ""
-//            showToast(value)
-//        }
-//    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun initUI() {
         initBottomNav()
-        initUI()
+        binding.appBar.btnSearch.setOnClickListener { startSearchActivity() }
     }
 
     override fun onResume() {
@@ -37,21 +29,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         )
     }
 
-    private fun initUI() {
-        this.onPause()
-        binding.appBar.btnSearch.setOnClickListener { startSearchActivity() }
-    }
-
     private fun startSearchActivity() {
-        if(!isDisable) {
+        if (!isDisable) {
             isDisable = true
-//            startActivity.launch(SearchActivity.getIntent(baseContext))
             startActivity(SearchActivity.getIntent(baseContext))
         }
     }
 
     companion object {
-        const val KEY_QUERY = "KEY_QUERY"
         fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }

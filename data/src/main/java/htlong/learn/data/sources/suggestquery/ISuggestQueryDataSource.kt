@@ -1,6 +1,7 @@
-package htlong.learn.youtube.data.source.suggestquery
+package htlong.learn.data.sources.suggestquery
 
-import htlong.learn.domain.entities.ResponseEntities
+import htlong.learn.domain.entities.SuggestQuery
+
 
 /**
  * - interface's purpose: interface datasource for suggest queries api
@@ -10,12 +11,12 @@ import htlong.learn.domain.entities.ResponseEntities
  */
 interface ISuggestQueryDataSource {
     interface Local {
-        suspend fun getAll(): ResponseEntities.SuggestQuery
+        suspend fun getAll(): SuggestQuery
         suspend fun save(q: String)
         suspend fun save(histories: List<String>)
     }
 
     interface Remote {
-        suspend fun suggest(q: String): ResponseEntities.SuggestQuery
+        suspend fun suggest(q: String): SuggestQuery
     }
 }
