@@ -6,23 +6,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import htlong.learn.youtube.YoutubeApplication
 
-abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
-    private val bindingInflater: (inflater: LayoutInflater) -> VB,
-    private val classViewModel: Class<VM>
+abstract class BaseFragment<VB : ViewBinding>(
+    private val bindingInflater: (inflater: LayoutInflater) -> VB
 ) : Fragment() {
 
+    protected val app by lazy { requireActivity().application as YoutubeApplication }
     protected val binding by lazy { bindingInflater(layoutInflater) }
-    protected val viewModel by lazy { ViewModelProvider(this)[classViewModel] }
 
     private var isNotYetInit: Boolean = true
 
+    abstract val viewModel: ViewModel
     abstract fun initUI()
     abstract fun initViewModel()
 
-    open fun onBackPressed(): Boolean = false
+    /**
+     * - Desc: false if onBackPress is empty
+     *
+     * @author HTLong
+     * @edit_at 07/05/2022
+     */
+    open fun onBackPressed() = false
+    open fun updateUI() {}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +46,4 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel>(
         }
         updateUI()
     }
-
-    open fun updateUI() {}
 }

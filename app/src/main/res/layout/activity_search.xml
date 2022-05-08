@@ -105,6 +105,7 @@
             android:paddingTop="@dimen/space_medium"
             android:visibility="@{(vm.isQueryMode || vm.isLoading) ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:isReset="@{true}"
             app:videoQuery="@{vm.videoQuery}" />
 
         <FrameLayout
@@ -117,6 +118,7 @@
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:indeterminateTint="@color/red_500"
                 android:layout_gravity="center" />
         </FrameLayout>
 

@@ -1,13 +1,18 @@
 package htlong.learn.youtube.ui.fragment.histories
 
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import htlong.learn.youtube.databinding.FragmentHistoriesBinding
 import htlong.learn.youtube.ui.base.BaseFragment
 
-class HistoriesFragment : BaseFragment<FragmentHistoriesBinding, HistoriesViewModel>(
-    FragmentHistoriesBinding::inflate,
-    HistoriesViewModel::class.java
+class HistoriesFragment : BaseFragment<FragmentHistoriesBinding>(
+    FragmentHistoriesBinding::inflate
 ) {
+
+    override val viewModel: HistoriesViewModel by viewModels {
+        HistoriesViewModel.Factory()
+    }
+    
     override fun initUI() {
     }
 

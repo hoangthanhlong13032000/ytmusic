@@ -11,4 +11,9 @@
     <string name="txt_search_youtube">Search YouTube</string>
     <string name="txt_no_videos_found">No Videos found</string>
     <string name="txt_retry">retry</string>
+
+    <string name="txt_trending_tab_now">Now</string>
+    <string name="txt_trending_tab_music">Music</string>
+    <string name="txt_trending_tab_gaming">Gaming</string>
+    <string name="txt_trending_tab_sport">Sport</string>
 </resources>

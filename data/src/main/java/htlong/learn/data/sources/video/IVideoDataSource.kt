@@ -2,6 +2,7 @@ package htlong.learn.data.sources.video
 
 import htlong.learn.domain.entities.VideoEntities
 import htlong.learn.domain.entities.VideoQuery
+import htlong.learn.domain.enums.TrendingType
 
 /**
  * - interface's purpose: Youtube video source
@@ -18,6 +19,6 @@ interface IVideoDataSource {
         suspend fun getByID(id: String): VideoEntities.Info
         suspend fun search(q: String): VideoQuery
         suspend fun save(video: VideoEntities.Info)
-//        suspend fun getByType(type: Enums.VideoType): ResponseEntities.Search
+        suspend fun getTrending(type: TrendingType): VideoQuery
     }
 }

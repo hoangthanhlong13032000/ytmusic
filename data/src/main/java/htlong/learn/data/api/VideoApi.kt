@@ -11,13 +11,19 @@ interface VideoApi {
     @GET("/api/search/youtube")
     suspend fun searchByQuery(@Query("search_query") query: String): Response<String>
 
-    @GET("/api/video/trending")
-    suspend fun getTrending(): Response<String>
+    @GET("/api/search/youtube/music")
+    suspend fun getMusicTrending(): Response<String>
 
-    @GET("/api/video/music")
-    suspend fun getMusic(): Response<String>
+    @GET("/api/search/youtube/trending")
+    suspend fun getNowTrending(): Response<String>
+
+    @GET("/api/search/youtube/gaming")
+    suspend fun getGamingTrending(): Response<String>
+
+    @GET("/api/search/youtube/sport")
+    suspend fun getSportTrending(): Response<String>
 
     companion object {
-        const val URL = "http://192.168.1.25:3333/api/video/youtube/"
+        const val URL = "http://192.168.1.25:3333"
     }
 }

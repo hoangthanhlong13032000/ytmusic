@@ -1,22 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.trending.TrendingFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/text_trending"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="htlong.learn.youtube.ui.fragment.trending.TrendingViewModel" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/space_large">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_trending_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:text="@string/txt_trending_tab_now" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_music_black_28dp"
+                android:text="@string/txt_trending_tab_music" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_esports_black_24dp"
+                android:text="@string/txt_trending_tab_gaming" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_sports_score_black_24dp"
+                android:text="@string/txt_trending_tab_sport" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/lo_swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tl_trending_tab"
+            android:layout_marginBottom="@dimen/height_bottom_bar"
+            android:visibility="@{vm.isLoading ? View.GONE : View.VISIBLE}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sg_video_rec_suggest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:videoQuery="@{vm.videoQuery}" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_not_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="@dimen/space_larger"
+            android:gravity="center"
+            android:text="@string/txt_no_videos_found"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_large"
+            android:visibility="@{vm.isError ? View.VISIBLE : View.GONE}" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateTint="@color/red_500"
+            android:visibility="@{vm.isLoading ? View.VISIBLE : View.GONE}" />
+    </RelativeLayout>
+</layout>

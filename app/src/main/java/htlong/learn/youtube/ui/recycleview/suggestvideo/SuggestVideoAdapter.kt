@@ -3,8 +3,8 @@ package htlong.learn.youtube.ui.recycleview.suggestvideo
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import htlong.learn.domain.entities.VideoQuery
 import htlong.learn.domain.entities.VideoEntities
+import htlong.learn.domain.entities.VideoQuery
 
 class SuggestVideoAdapter(
     private var videoQuery: VideoQuery,
@@ -28,12 +28,12 @@ class SuggestVideoAdapter(
     }
 }
 
-@BindingAdapter("videoQuery")
-fun bindSuggests(recyclerView: RecyclerView, videoQuery: VideoQuery?) {
+@BindingAdapter(value = ["videoQuery", "isReset"], requireAll = false)
+fun bindSuggests(recyclerView: RecyclerView, videoQuery: VideoQuery?, isReset: Boolean?) {
     (recyclerView.adapter as? SuggestVideoAdapter)?.apply {
         videoQuery?.let {
             this.updateSuggestVideoResponse(it)
-            recyclerView.scrollToPosition(0)
+            if (isReset == true) recyclerView.scrollToPosition(0)
         }
     }
 }

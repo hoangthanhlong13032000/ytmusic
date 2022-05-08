@@ -11,7 +11,7 @@ import htlong.learn.domain.usecases.suggestquery.SaveHistoriesQueryUseCase
 import htlong.learn.domain.usecases.video.SearchVideoByQueryUseCase
 import htlong.learn.youtube.common.Extensions.launch
 
-class SearchViewModel(
+class SearchViewModel private constructor(
     private val getSuggestQueryUseCase: GetSuggestQueryUseCase,
     private val saveHistoriesQueryUseCase: SaveHistoriesQueryUseCase,
     private val searchVideoByQueryUseCase: SearchVideoByQueryUseCase
@@ -82,7 +82,7 @@ class SearchViewModel(
             launch {
                 searchVideoByQueryUseCase(query = q).let {
                     _videoQuery.value = it
-                    if(it.suggests.isEmpty()) isError.value = true
+                    if (it.suggests.isEmpty()) isError.value = true
                 }
                 isLoading.value = false
                 isQueryMode.value = false
@@ -129,21 +129,16 @@ class SearchViewModel(
      * @author HTLong
      * @edit_at 22/04/2022
      */
-    class SearchViewModelFactory(
+    class Factory(
         private val getSuggestQueryUseCase: GetSuggestQueryUseCase,
         private val saveHistoriesQueryUseCase: SaveHistoriesQueryUseCase,
         private val searchVideoByQueryUseCase: SearchVideoByQueryUseCase
     ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
-                return SearchViewModel(
-                    getSuggestQueryUseCase,
-                    saveHistoriesQueryUseCase,
-                    searchVideoByQueryUseCase
-                ) as T
-            }
-            throw IllegalArgumentException("SearchViewModelFactory require SearchViewModel class")
-        }
+        override fun <T : ViewModel> create(modelClass: Class<T>) = SearchViewModel(
+            getSuggestQueryUseCase,
+            saveHistoriesQueryUseCase,
+            searchVideoByQueryUseCase
+        ) as T
     }
 }
 

@@ -3,6 +3,7 @@ package htlong.learn.youtube
 import android.app.Application
 import htlong.learn.domain.usecases.suggestquery.GetSuggestQueryUseCase
 import htlong.learn.domain.usecases.suggestquery.SaveHistoriesQueryUseCase
+import htlong.learn.domain.usecases.video.GetTrendingUseCase
 import htlong.learn.domain.usecases.video.SearchVideoByQueryUseCase
 import htlong.learn.youtube.di.Injector
 
@@ -20,4 +21,5 @@ class YoutubeApplication : Application() {
 
     // HTLong: video use cases
     val searchVideoByQueryUseCase by lazy { SearchVideoByQueryUseCase(videoRepo) }
+    val getTrendingUseCase by lazy { GetTrendingUseCase(videoRepo) }
 }

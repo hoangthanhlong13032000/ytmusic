@@ -29,10 +29,11 @@
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_large">20sp</dimen>
 
-    <dimen name="elevation_default">8dp</dimen>
-    <dimen name="height_app_bar">60dp</dimen>
+    <dimen name="elevation_default">4dp</dimen>
+    <dimen name="height_app_bar">50dp</dimen>
+    <dimen name="height_bottom_bar">56dp</dimen>
 
     <dimen name="height_suggest_video_view">288dp</dimen>
     <dimen name="height_video_image">207dp</dimen>
-    <dimen name="diameter_channel_image">40dp</dimen>
+    <dimen name="diameter_channel_image">44dp</dimen>
 </resources>

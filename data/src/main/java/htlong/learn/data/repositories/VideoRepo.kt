@@ -3,6 +3,7 @@ package htlong.learn.data.repositories
 import htlong.learn.data.sources.video.IVideoDataSource
 import htlong.learn.domain.entities.VideoEntities
 import htlong.learn.domain.entities.VideoQuery
+import htlong.learn.domain.enums.TrendingType
 import htlong.learn.domain.repositories.IVideoRepo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,10 @@ class VideoRepo private constructor(
 
     override suspend fun getByID(id: String): VideoEntities.Info {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getTrending(type: TrendingType): VideoQuery {
+        return withContext(dispatcher) { videoRemoteDS.getTrending(type) }
     }
 
     override suspend fun search(query: String): VideoQuery {

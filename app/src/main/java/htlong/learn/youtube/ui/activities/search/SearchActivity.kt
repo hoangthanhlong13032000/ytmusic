@@ -2,14 +2,12 @@ package htlong.learn.youtube.ui.activities.search
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import htlong.learn.domain.entities.SuggestQuery
 import htlong.learn.domain.entities.VideoQuery
-import htlong.learn.youtube.YoutubeApplication
 import htlong.learn.youtube.common.Extensions.hideSoftKeyboard
 import htlong.learn.youtube.common.Extensions.showToast
 import htlong.learn.youtube.databinding.ActivitySearchBinding
@@ -20,34 +18,26 @@ import htlong.learn.youtube.ui.recycleview.suggestvideo.SuggestVideoAdapter
 class SearchActivity : BaseActivity<ActivitySearchBinding>(
     ActivitySearchBinding::inflate
 ) {
-    /**
-     * - Desc: define viewModel by ViewModelFactory
-     *
-     * @author HTLong
-     * @edit_at 24/04/2022
-     */
-    private val viewModel: SearchViewModel by viewModels {
-        (application as YoutubeApplication).let { app ->
-            SearchViewModel.SearchViewModelFactory(
-                getSuggestQueryUseCase = app.getSuggestQueryUseCase,
-                saveHistoriesQueryUseCase = app.saveHistoriesQueryUseCase,
-                searchVideoByQueryUseCase = app.searchVideoByQueryUseCase
-            )
-        }
+
+    override val viewModel: SearchViewModel by viewModels {
+        SearchViewModel.Factory(
+            getSuggestQueryUseCase = app.getSuggestQueryUseCase,
+            saveHistoriesQueryUseCase = app.saveHistoriesQueryUseCase,
+            searchVideoByQueryUseCase = app.searchVideoByQueryUseCase
+        )
     }
 
-    override fun initUI() {
-        initViewModelUI()
-        initRecSuggestUI()
-        initSearchUI()
-        initOtherUI()
-    }
-
-    private fun initViewModelUI() {
+    override fun initViewModel() {
         binding.lifecycleOwner = this
         binding.vm = viewModel.also {
             it.query.observe(this) { _ -> it.suggest() }
         }
+    }
+
+    override fun initUI() {
+        initRecSuggestUI()
+        initSearchUI()
+        initOtherUI()
     }
 
     private fun initRecSuggestUI() {
