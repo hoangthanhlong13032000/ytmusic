@@ -12,8 +12,16 @@ import htlong.learn.domain.enums.TrendingType
 class VideoRemoteDataSource private constructor() : IVideoDataSource.Remote {
     private val videoApi = NetworkHelper.createApi(VideoApi.URL, VideoApi::class.java)
 
-    override suspend fun getByID(id: String): VideoEntities.Info {
-        TODO("Not yet implemented")
+    override suspend fun getByID(id: String): VideoEntities.Info? {
+        return try {
+            videoApi.searchByID(id = id).body()?.let {
+                val videoResponse = Gson().fromJson(it, ApiResponse.Video::class.java)
+                videoResponse.data
+            }
+        } catch (e: Exception) {
+            Utils.handleException("video_id_$id", e)
+            null
+        }
     }
 
     override suspend fun search(q: String): VideoQuery {

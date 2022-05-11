@@ -10,8 +10,9 @@
         android:id="@+id/iv_video_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
-        android:layout_above="@id/iv_channel_img" />
+        android:layout_above="@id/iv_channel_img"
+        android:background="@color/gray"
+        tools:layout_height="100dp"/>
 
     <TextView
         android:id="@+id/tv_video_length"
@@ -36,8 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginVertical="@dimen/space_large"
         android:layout_marginStart="@dimen/space_small"
-        android:layout_marginEnd="@dimen/space_larger"
-        android:background="@color/grey"/>
+        android:layout_marginEnd="@dimen/space_larger" />
 
     <TextView
         android:id="@+id/tv_video_title"

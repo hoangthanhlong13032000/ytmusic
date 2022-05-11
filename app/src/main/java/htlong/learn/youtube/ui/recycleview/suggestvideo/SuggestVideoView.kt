@@ -11,7 +11,8 @@ import htlong.learn.youtube.common.Extensions.getMDimension
 import htlong.learn.youtube.common.Extensions.getMDrawable
 import htlong.learn.youtube.databinding.ItemSuggestVideoBinding
 
-class SuggestVideoView(context: Context?, attrs: AttributeSet? = null) : RelativeLayout(context, attrs) {
+class SuggestVideoView(context: Context?, attrs: AttributeSet? = null) :
+    RelativeLayout(context, attrs) {
     var binding = ItemSuggestVideoBinding.inflate(LayoutInflater.from(context), this)
 
     var videoDetails: VideoEntities.Details = VideoEntities.Details()
@@ -20,10 +21,15 @@ class SuggestVideoView(context: Context?, attrs: AttributeSet? = null) : Relativ
             binding.run {
                 tvVideoTitle.text = value.title
                 tvVideoLength.text = value.lengthInText
-                tvVideoDesc.text = listOf(value.channel.title, value.stats.viewCount, value.publishedTime).joinToString(separator = " \u00B7 ")
+                tvVideoDesc.text = listOf(
+                    value.channel.title,
+                    value.stats.viewCount,
+                    value.publishedTime
+                ).joinToString(separator = " \u00B7 ")
 
                 (value.thumbnails.size - 1).let { i ->
-                    if(i > -1) Glide.with(context).load(value.thumbnails[i].url).fitCenter().into(ivVideoImg)
+                    if (i > -1) Glide.with(context).load(value.thumbnails[i].url).fitCenter()
+                        .into(ivVideoImg)
                 }
 
                 Glide.with(context).load(value.channel.avatar.thumb).circleCrop().into(ivChannelImg)
@@ -31,7 +37,10 @@ class SuggestVideoView(context: Context?, attrs: AttributeSet? = null) : Relativ
         }
 
     init {
-        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, getContext().getMDimension(R.dimen.height_suggest_video_view))
+        layoutParams = LayoutParams(
+            LayoutParams.MATCH_PARENT,
+            getContext().getMDimension(R.dimen.height_suggest_video_view)
+        )
         background = getContext().getMDrawable(R.drawable.bg_rec_ripple_grey)
     }
 }

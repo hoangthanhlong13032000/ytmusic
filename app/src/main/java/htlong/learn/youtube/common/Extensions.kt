@@ -33,7 +33,7 @@ object Extensions {
         this.viewModelScope.launch { block() }
     }
 
-    fun Activity.hideSoftKeyboard(editText: EditText){
+    fun Activity.hideSoftKeyboard(editText: EditText) {
         (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).apply {
             hideSoftInputFromWindow(editText.windowToken, 0)
         }

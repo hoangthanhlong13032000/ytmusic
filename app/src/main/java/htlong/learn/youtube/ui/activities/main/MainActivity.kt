@@ -1,7 +1,5 @@
 package htlong.learn.youtube.ui.activities.main
 
-import android.content.Context
-import android.content.Intent
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -12,20 +10,18 @@ import htlong.learn.youtube.ui.base.BaseActivity
 import htlong.learn.youtube.ui.base.BaseFragment
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
-    private val navHostFragment by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment }
 
     override val viewModel: MainViewModel by viewModels {
         MainViewModel.Factory()
     }
 
-    override fun initViewModel() {
-    }
+    private val navHostFragment by lazy { supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment }
+
+    override fun initViewModel() {}
 
     override fun initUI() {
         initBottomNav()
-
     }
-
 
     private fun initBottomNav() {
         binding.navView.setupWithNavController(navHostFragment.findNavController())
@@ -40,9 +36,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             e.printStackTrace()
         }
         if (!isSuccess) super.onBackPressed()
-    }
-
-    companion object {
-        fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
     }
 }

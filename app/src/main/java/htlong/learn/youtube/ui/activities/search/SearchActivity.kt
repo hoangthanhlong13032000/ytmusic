@@ -1,15 +1,16 @@
 package htlong.learn.youtube.ui.activities.search
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import com.google.gson.Gson
 import htlong.learn.domain.entities.SuggestQuery
 import htlong.learn.domain.entities.VideoQuery
 import htlong.learn.youtube.common.Extensions.hideSoftKeyboard
-import htlong.learn.youtube.common.Extensions.showToast
 import htlong.learn.youtube.databinding.ActivitySearchBinding
 import htlong.learn.youtube.ui.base.BaseActivity
 import htlong.learn.youtube.ui.recycleview.suggestquery.SuggestQueryAdapter
@@ -59,7 +60,11 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(
             sgVideoRecSuggest.adapter = SuggestVideoAdapter(
                 videoQuery = VideoQuery()
             ) { vDetails ->
-                showToast(vDetails.title)
+//                showToast(vDetails.title)
+                val intent = Intent()
+                intent.putExtra(KEY_SEARCH, Gson().toJson(vDetails))
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             }
         }
     }
@@ -109,6 +114,7 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(
     }
 
     companion object {
+        const val KEY_SEARCH = "KEY_SEARCH"
         fun getIntent(context: Context) = Intent(context, SearchActivity::class.java)
     }
 }

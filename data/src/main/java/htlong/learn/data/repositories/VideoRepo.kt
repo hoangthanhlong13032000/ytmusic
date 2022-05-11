@@ -15,8 +15,8 @@ class VideoRepo private constructor(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : IVideoRepo {
 
-    override suspend fun getByID(id: String): VideoEntities.Info {
-        TODO("Not yet implemented")
+    override suspend fun getByID(id: String): VideoEntities.Info? {
+        return withContext(dispatcher) { videoRemoteDS.getByID(id) }
     }
 
     override suspend fun getTrending(type: TrendingType): VideoQuery {

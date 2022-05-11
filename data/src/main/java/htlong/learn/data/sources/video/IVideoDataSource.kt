@@ -16,7 +16,7 @@ interface IVideoDataSource {
     }
 
     interface Remote {
-        suspend fun getByID(id: String): VideoEntities.Info
+        suspend fun getByID(id: String): VideoEntities.Info?
         suspend fun search(q: String): VideoQuery
         suspend fun save(video: VideoEntities.Info)
         suspend fun getTrending(type: TrendingType): VideoQuery
