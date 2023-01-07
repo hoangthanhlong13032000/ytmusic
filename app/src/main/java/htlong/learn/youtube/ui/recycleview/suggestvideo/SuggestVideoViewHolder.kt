@@ -1,17 +1,17 @@
 package htlong.learn.youtube.ui.recycleview.suggestvideo
 
 import androidx.recyclerview.widget.RecyclerView
-import htlong.learn.domain.entities.VideoEntities
+import htlong.learn.domain.entities.AudioDetail
 
 class SuggestVideoViewHolder(
     private val suggestVideoView: SuggestVideoView,
-    private val clickItemListener: (VideoEntities.Details) -> Unit,
+    private val clickItemListener: (AudioDetail) -> Unit,
 ) : RecyclerView.ViewHolder(suggestVideoView) {
 
-    fun onBindData(videoDetails: VideoEntities.Details) {
-        suggestVideoView.videoDetails = videoDetails
+    fun onBindData(audioDetail: AudioDetail) {
+        suggestVideoView.videoDetail = audioDetail
         suggestVideoView.binding.root.setOnClickListener {
-            clickItemListener(videoDetails)
+            clickItemListener(audioDetail)
         }
     }
 }

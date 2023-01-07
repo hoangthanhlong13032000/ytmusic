@@ -24,7 +24,7 @@ object NetworkHelper {
             .build()
     }
 
-    fun <T> createApi(url: String, responseClass: Class<T>): T {
+    fun <T> createService(url: String, responseClass: Class<T>): T {
         return createRetrofit(url = url).create(responseClass)
     }
 }

@@ -9,8 +9,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ServiceLifecycleDispatcher
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 object Extensions {
@@ -29,8 +33,8 @@ object Extensions {
      * @author HTLong
      * @edit_at 21/04/2022
      */
-    inline fun ViewModel.launch(crossinline block: suspend () -> Unit) {
-        this.viewModelScope.launch { block() }
+    inline fun ViewModel.launch(dispatcher: CoroutineDispatcher = Dispatchers.Main, crossinline block: suspend () -> Unit) : Job {
+        return this.viewModelScope.launch (dispatcher) { block() }
     }
 
     fun Activity.hideSoftKeyboard(editText: EditText) {

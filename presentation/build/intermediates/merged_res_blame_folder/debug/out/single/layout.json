@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/activity_main.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/activity_main.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/appbar_main.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/appbar_main.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/fragment_histories.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/fragment_histories.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/activity_search.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/activity_search.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/fragment_home.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/fragment_home.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/item_suggest.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/item_suggest.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/fragment_trending.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/fragment_trending.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/fragment_downloaded.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/fragment_downloaded.xml"
+    },
+    {
+        "merged": "htlong.learn.youtube.presentation-mergeDebugResources-47:/layout/fragment_playlists.xml",
+        "source": "htlong.learn.youtube.presentation-main-50:/layout/fragment_playlists.xml"
+    }
+]

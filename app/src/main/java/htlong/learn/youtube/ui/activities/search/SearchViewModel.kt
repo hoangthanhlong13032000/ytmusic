@@ -1,49 +1,50 @@
 package htlong.learn.youtube.ui.activities.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import htlong.learn.domain.entities.SuggestQuery
-import htlong.learn.domain.entities.VideoQuery
+import androidx.lifecycle.*
+import htlong.learn.domain.entities.AudioQuery
+import htlong.learn.domain.usecases.online.SearchAudioByQueryUseCase
+import htlong.learn.domain.usecases.suggestquery.GetHistoryQueryUseCase
 import htlong.learn.domain.usecases.suggestquery.GetSuggestQueryUseCase
-import htlong.learn.domain.usecases.suggestquery.SaveHistoriesQueryUseCase
-import htlong.learn.domain.usecases.video.SearchVideoByQueryUseCase
+import htlong.learn.domain.usecases.suggestquery.RemoveHistoryQueryUseCase
+import htlong.learn.domain.usecases.suggestquery.SaveHistoryQueryUseCase
 import htlong.learn.youtube.common.Extensions.launch
+import htlong.learn.youtube.models.VSuggestQuery
 
 class SearchViewModel private constructor(
     private val getSuggestQueryUseCase: GetSuggestQueryUseCase,
-    private val saveHistoriesQueryUseCase: SaveHistoriesQueryUseCase,
-    private val searchVideoByQueryUseCase: SearchVideoByQueryUseCase
+    private val getHistoryQueryUseCase: GetHistoryQueryUseCase,
+    private val saveHistoryQueryUseCase: SaveHistoryQueryUseCase,
+    private val removeHistoryQueryUseCase: RemoveHistoryQueryUseCase,
+    private val searchAudioByQueryUseCase: SearchAudioByQueryUseCase
 ) : ViewModel() {
 
-    var query = MutableLiveData<String>().apply { value = "" }
+    private val _suggestQuery = MutableLiveData<VSuggestQuery>()
+    val suggestQuery: LiveData<VSuggestQuery> get() = _suggestQuery
 
-    private val _suggestQuery = MutableLiveData<SuggestQuery>()
-    val suggestQuery: LiveData<SuggestQuery> get() = _suggestQuery
+    private val _audioQuery = MutableLiveData<AudioQuery>()
+    val audioQuery: LiveData<AudioQuery> get() = _audioQuery
 
-    private val _videoQuery = MutableLiveData<VideoQuery>()
-    val videoQuery: LiveData<VideoQuery> get() = _videoQuery
+    private val _displayMode = MutableLiveData(DisplayMode.SUGGEST_QUERIES)
+    val displayMode: LiveData<DisplayMode> get() = _displayMode
 
-    var isQueryMode = MutableLiveData(true)
-    var isLoading = MutableLiveData(false)
-    var isError = MutableLiveData(false)
+    fun setDisplayMode(displayMode: DisplayMode) {
+        _displayMode.value = displayMode
+    }
 
     /**
      * - Desc: current query search after process
      *
-     * @param q if null return current query
-     * @param q else return q after processed
+     * @param subFix if null return current query
+     * @param subFix else return q after processed
      *
      * @author HTLong
      * @edit_at 24/04/2022
      */
-    fun getQuery(q: String? = null): String {
-        val curQ = query.value ?: ""
+    fun appendOrReplaceAndGetQuery(query: String, subFix: String? = null): String {
         return when {
-            q == null -> curQ // return current query if q is null
-            q.startsWith("... ") -> curQ.substringBeforeLast(" ") + q.substring(3) // concatenate q and curQ
-            else -> q
+            subFix.isNullOrBlank() -> query // return current query if subFix is null
+            subFix.startsWith("... ") -> query.substringBeforeLast(" ") + subFix.substring(3) // concatenate subFix and query
+            else -> subFix // replace subFix for query
         }
     }
 
@@ -54,20 +55,23 @@ class SearchViewModel private constructor(
      * @author HTLong
      * @edit_at 24/04/2022
      */
-    fun suggest() {
-        launch {
-            isQueryMode.value = true
-            isError.value = false
-            val q = query.value ?: ""
+    fun suggest(query: String) {
+        _displayMode.value = DisplayMode.SUGGEST_QUERIES
 
-            var sgQuery = getSuggestQueryUseCase(query = q)
-            if (sgQuery.suggests.isEmpty()) {
-                sgQuery = getSuggestQueryUseCase(query = q.substringAfterLast(" "))
-                sgQuery.suggests = sgQuery.suggests.map { "... $it" }
+        launch {
+            if (query.isBlank()) {
+                _suggestQuery.value = VSuggestQuery(query = query, suggests = getHistoryQueryUseCase(), isHistory = true)
+            } else {
+                var sgQuery = getSuggestQueryUseCase(query = query)
+                if (sgQuery.suggests.isEmpty()) {
+                    sgQuery = getSuggestQueryUseCase(query = query.substringAfterLast(" "))
+                    sgQuery.suggests = ArrayList(sgQuery.suggests.map { "... $it" })
+                }
+                _suggestQuery.value = VSuggestQuery(suggestQuery = sgQuery, isHistory = false)
             }
-            _suggestQuery.value = sgQuery
         }
     }
+
 
     /**
      * - Desc: search videos list
@@ -75,32 +79,16 @@ class SearchViewModel private constructor(
      * @author HTLong
      * @edit_at 24/04/2022
      */
-    fun search() {
-        query.value?.let { q ->
-            isLoading.value = true
-            isError.value = false
-            launch {
-                searchVideoByQueryUseCase(query = q).let {
-                    _videoQuery.value = it
-                    if (it.suggests.isEmpty()) isError.value = true
-                }
-                isLoading.value = false
-                isQueryMode.value = false
-            }
-        }
-    }
+    fun searchAudioByQuery(query: String) {
+        _displayMode.value = DisplayMode.LOADING
 
-
-    /**
-     * - Desc: save searched query to history
-     *
-     * @author HTLong
-     * @edit_at 24/04/2022
-     */
-    fun saveHistoriesQuery(histories: List<String>? = null) {
         launch {
-            if (histories != null) saveHistoriesQueryUseCase(histories = histories)
-            else saveHistoriesQueryUseCase(query = query.value ?: "")
+            saveHistoryQueryUseCase(query = query)
+            searchAudioByQueryUseCase(query = query).let {
+                _audioQuery.value = it
+                if (it.suggests.isEmpty()) _displayMode.value = DisplayMode.ERROR
+                else _displayMode.value = DisplayMode.AUDIOS
+            }
         }
     }
 
@@ -111,34 +99,43 @@ class SearchViewModel private constructor(
      * @author HTLong
      * @edit_at 24/04/2022
      */
-    fun removeQueryFromHistories(q: String): Int? {
-        var pos: Int? = null
+    fun removeQueryFromHistories(query: String): Int? {
         _suggestQuery.value?.run {
-            suggests = suggests.filterIndexed { i, s ->
-                (s != q).also { if (!it) pos = i }
+            val pos = suggests.indexOf(query)
+            if (pos > -1) {
+                launch { removeHistoryQueryUseCase(query = query) }
+                suggests = ArrayList(suggests).apply { removeAt(pos) }
+                return pos
             }
-            saveHistoriesQuery(histories = suggests)
         }
-        return pos
+        return null
     }
 
 
     /**
-     * - class's purpose: Viewmodel Factory to create a ViewModel
+     * - class's purpose: ViewModel Factory to create a ViewModel
      *
      * @author HTLong
      * @edit_at 22/04/2022
      */
     class Factory(
         private val getSuggestQueryUseCase: GetSuggestQueryUseCase,
-        private val saveHistoriesQueryUseCase: SaveHistoriesQueryUseCase,
-        private val searchVideoByQueryUseCase: SearchVideoByQueryUseCase
+        private val getHistoryQueryUseCase: GetHistoryQueryUseCase,
+        private val saveHistoryQueryUseCase: SaveHistoryQueryUseCase,
+        private val removeHistoryQueryUseCase: RemoveHistoryQueryUseCase,
+        private val searchAudioByQueryUseCase: SearchAudioByQueryUseCase
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>) = SearchViewModel(
             getSuggestQueryUseCase,
-            saveHistoriesQueryUseCase,
-            searchVideoByQueryUseCase
+            getHistoryQueryUseCase,
+            saveHistoryQueryUseCase,
+            removeHistoryQueryUseCase,
+            searchAudioByQueryUseCase
         ) as T
+    }
+
+    companion object {
+        private const val SEARCH_VIEW_MODEL = "search_view_model"
     }
 }
 

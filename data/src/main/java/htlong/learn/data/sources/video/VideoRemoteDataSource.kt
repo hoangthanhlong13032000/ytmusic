@@ -1,35 +1,44 @@
 package htlong.learn.data.sources.video
 
 import com.google.gson.Gson
-import htlong.learn.data.api.VideoApi
+import com.google.gson.reflect.TypeToken
 import htlong.learn.data.common.Utils
 import htlong.learn.data.entities.ApiResponse
 import htlong.learn.data.helpers.NetworkHelper
-import htlong.learn.domain.entities.VideoEntities
-import htlong.learn.domain.entities.VideoQuery
+import htlong.learn.data.remote.services.VideoService
+import htlong.learn.domain.entities.Audio
+import htlong.learn.domain.entities.AudioDetail
+import htlong.learn.domain.entities.AudioQuery
 import htlong.learn.domain.enums.TrendingType
 
-class VideoRemoteDataSource private constructor() : IVideoDataSource.Remote {
-    private val videoApi = NetworkHelper.createApi(VideoApi.URL, VideoApi::class.java)
+class VideoRemoteDataSource private constructor() : IAudioDataSource.Remote {
+    private val videoService = NetworkHelper.createService(VideoService.URL, VideoService::class.java)
 
-    override suspend fun getByID(id: String): VideoEntities.Info? {
-        return try {
-            videoApi.searchByID(id = id).body()?.let {
-                val videoResponse = Gson().fromJson(it, ApiResponse.Video::class.java)
-                videoResponse.data
+    override suspend fun getByID(id: String): Audio? {
+        var result: Audio? = null
+        try {
+            videoService.searchByID(id = id).body()?.let {
+                val gson = Gson()
+                val audioResponse = gson.fromJson(it, ApiResponse::class.java)
+                if (audioResponse.isSuccess()) {
+                    result = gson.fromJson(audioResponse.data, Audio::class.java)
+                }
             }
         } catch (e: Exception) {
             Utils.handleException("video_id_$id", e)
-            null
         }
+        return result
     }
 
-    override suspend fun search(q: String): VideoQuery {
-        val result = VideoQuery(query = q)
+    override suspend fun search(q: String): AudioQuery {
+        val result = AudioQuery(query = q, suggests = arrayListOf())
         try {
-            videoApi.searchByQuery(query = q).body()?.let {
-                val videoResponse = Gson().fromJson(it, ApiResponse.VideoSearched::class.java)
-                result.suggests = videoResponse.data
+            val gson = Gson()
+            videoService.searchByQuery(query = q).body()?.let {
+                val videoResponse = gson.fromJson(it, ApiResponse::class.java)
+                if (videoResponse.isSuccess()) {
+                    result.suggests = gson.fromJson(videoResponse.data, object : TypeToken<ArrayList<AudioDetail>>() {}.type)
+                }
             }
         } catch (e: Exception) {
             Utils.handleException("video_search", e)
@@ -37,26 +46,24 @@ class VideoRemoteDataSource private constructor() : IVideoDataSource.Remote {
         return result
     }
 
-    override suspend fun getTrending(type: TrendingType): VideoQuery {
-        val result = VideoQuery(query = "")
+    override suspend fun getTrending(type: TrendingType): AudioQuery {
+        val result = AudioQuery(query = "", suggests = arrayListOf())
         try {
+            val gson = Gson()
             val body = when (type) {
-                TrendingType.NOW -> videoApi.getNowTrending().body()
-                TrendingType.MUSIC -> videoApi.getMusicTrending().body()
-                TrendingType.GAMING -> videoApi.getGamingTrending().body()
-                TrendingType.SPORT -> videoApi.getSportTrending().body()
-
+                TrendingType.NOW -> videoService.getNowTrending().body()
+                TrendingType.MUSIC -> videoService.getMusicTrending().body()
+                TrendingType.GAMING -> videoService.getGamingTrending().body()
+                TrendingType.SPORT -> videoService.getSportTrending().body()
             }
-            val videoResponse = Gson().fromJson(body, ApiResponse.VideoSearched::class.java)
-            result.suggests = videoResponse.data
+            val videoResponse = gson.fromJson(body, ApiResponse::class.java)
+            if (videoResponse.isSuccess()) {
+                result.suggests = gson.fromJson(videoResponse.data, object : TypeToken<ArrayList<AudioDetail>>() {}.type)
+            }
         } catch (e: Exception) {
             Utils.handleException("video_${type.name}_trending", e)
         }
         return result
-    }
-
-    override suspend fun save(video: VideoEntities.Info) {
-        TODO("Not yet implemented")
     }
 
 

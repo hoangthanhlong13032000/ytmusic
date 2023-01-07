@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/iv_channel_img"
-        android:background="@color/gray"
-        tools:layout_height="100dp"/>
+        android:background="@color/grey"
+        tools:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/tv_video_length"
