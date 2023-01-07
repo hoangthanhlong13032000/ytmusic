@@ -46,4 +46,18 @@ abstract class BaseFragment<VB : ViewBinding>(
         }
         updateUI()
     }
+
+    fun disable() {
+        binding.root.apply {
+            isClickable = false
+            isFocusable = false
+        }
+    }
+
+    fun enable() {
+        binding.root.apply {
+            isClickable = true
+            isFocusable = true
+        }
+    }
 }

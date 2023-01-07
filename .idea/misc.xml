@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../../layout/custom_preview.xml" value="0.22685185185185186" />
+        <entry key="../../../../../layout/custom_preview.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/bg_appbar_main.xml" value="0.139" />
         <entry key="app/src/main/res/drawable/bg_btn_default_ripple.xml" value="0.139" />
         <entry key="app/src/main/res/drawable/bg_btn_red_ripple.xml" value="0.139" />
@@ -11,7 +11,13 @@
         <entry key="app/src/main/res/drawable/bg_gray_round.xml" value="0.139" />
         <entry key="app/src/main/res/drawable/bg_gray_round_small.xml" value="0.2525" />
         <entry key="app/src/main/res/drawable/bg_rec_radius_nor.xml" value="0.2525" />
+        <entry key="app/src/main/res/drawable/bg_rec_radius_sm_ripple_gray.xml" value="0.1755" />
+        <entry key="app/src/main/res/drawable/bg_rec_radius_sm_ripple_red.xml" value="0.243" />
+        <entry key="app/src/main/res/drawable/bg_rec_radius_tiny_black.xml" value="0.243" />
+        <entry key="app/src/main/res/drawable/bg_rec_ripple_grey.xml" value="0.1755" />
+        <entry key="app/src/main/res/drawable/bg_rec_white_bottom_radius_nor.xml" value="0.2375" />
         <entry key="app/src/main/res/drawable/bg_rec_white_radius_nor.xml" value="0.195" />
+        <entry key="app/src/main/res/drawable/bg_rec_white_top_radius_nor.xml" value="0.2375" />
         <entry key="app/src/main/res/drawable/bg_view_default_ripple.xml" value="0.123" />
         <entry key="app/src/main/res/drawable/bg_white_round.xml" value="0.271" />
         <entry key="app/src/main/res/drawable/bg_white_round_normal.xml" value="0.123" />
@@ -20,28 +26,35 @@
         <entry key="app/src/main/res/drawable/ic_cancel_black_18dp.xml" value="0.1225" />
         <entry key="app/src/main/res/drawable/ic_clear_black_24dp.xml" value="0.139" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.271" />
+        <entry key="app/src/main/res/drawable/ic_music.xml" value="0.243" />
+        <entry key="app/src/main/res/drawable/ic_music_black.xml" value="0.2375" />
         <entry key="app/src/main/res/drawable/ic_music_black_28dp.xml" value="0.2965" />
         <entry key="app/src/main/res/drawable/ic_playlist_play_black_24dp.xml" value="0.1755" />
         <entry key="app/src/main/res/drawable/ic_search_black_24.xml" value="0.2915" />
         <entry key="app/src/main/res/drawable/ic_search_black_24dp.xml" value="0.1495" />
         <entry key="app/src/main/res/drawable/ic_search_black_28dp.xml" value="0.192" />
         <entry key="app/src/main/res/drawable/ic_youtube_logo_2017.xml" value="0.212" />
+        <entry key="app/src/main/res/layout-w600dp/item_suggest_video.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.2551813471502591" />
-        <entry key="app/src/main/res/layout/appbar_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/appbar_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.28430953398888414" />
         <entry key="app/src/main/res/layout/fragment_downloaded.xml" value="0.15091919623770841" />
         <entry key="app/src/main/res/layout/fragment_histories.xml" value="0.15091919623770841" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.15091919623770841" />
+        <entry key="app/src/main/res/layout/fragment_playing.xml" value="0.28430953398888414" />
         <entry key="app/src/main/res/layout/fragment_playlists.xml" value="0.15091919623770841" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.15091919623770841" />
-        <entry key="app/src/main/res/layout/fragment_trending.xml" value="0.15091919623770841" />
+        <entry key="app/src/main/res/layout/fragment_trending.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_suggest.xml" value="0.38976377952755903" />
+        <entry key="app/src/main/res/layout/item_suggest_query.xml" value="0.28430953398888414" />
+        <entry key="app/src/main/res/layout/item_suggest_video.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.33" />
+        <entry key="presentation/src/main/res/layout/activity_search.xml" value="0.18742085268045588" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

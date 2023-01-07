@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YTMusic</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_trending">Trending</string>
+    <string name="title_histories">Histories</string>
+    <string name="title_playlists">Playlists</string>
+    <string name="title_downloaded">Downloaded</string>
+
+    <string name="txt_search">Search</string>
+    <string name="txt_search_youtube">Search YouTube</string>
+    <string name="txt_no_videos_found">No Videos found</string>
+    <string name="txt_retry">retry</string>
+
+    <string name="txt_trending_tab_now">Now</string>
+    <string name="txt_trending_tab_music">Music</string>
+    <string name="txt_trending_tab_gaming">Gaming</string>
+    <string name="txt_trending_tab_sport">Sport</string>
+</resources>

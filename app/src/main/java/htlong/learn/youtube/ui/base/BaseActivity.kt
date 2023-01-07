@@ -3,6 +3,7 @@ package htlong.learn.youtube.ui.base
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 import htlong.learn.youtube.YoutubeApplication
